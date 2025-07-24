@@ -43,7 +43,7 @@ public class SubscriptionDetailsCommandTests
         var collection = new ServiceCollection().AddSingleton(_serviceBusService);
 
         _serviceProvider = collection.BuildServiceProvider();
-        _command = new(_logger);
+        _command = new();
         _context = new(_serviceProvider);
         _parser = new(_command.GetCommand());
     }
@@ -56,13 +56,10 @@ public class SubscriptionDetailsCommandTests
         {
             Name = SubscriptionName,
             TopicName = TopicName,
-            Status = "Active",
-            CreatedAt = DateTimeOffset.UtcNow.AddDays(-30),
-            AccessedAt = DateTimeOffset.UtcNow.AddDays(-1),
+            Status = Azure.Messaging.ServiceBus.Administration.EntityStatus.Active,
             DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             LockDuration = TimeSpan.FromMinutes(1),
             MaxDeliveryCount = 10,
-            EnableBatchedOperations = true,
             ActiveMessageCount = 5,
             DeadLetterMessageCount = 0,
             TransferMessageCount = 0,

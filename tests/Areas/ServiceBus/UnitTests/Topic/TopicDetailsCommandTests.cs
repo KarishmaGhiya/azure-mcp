@@ -42,7 +42,7 @@ public class TopicDetailsCommandTests
         var collection = new ServiceCollection().AddSingleton(_serviceBusService);
 
         _serviceProvider = collection.BuildServiceProvider();
-        _command = new(_logger);
+        _command = new();
         _context = new(_serviceProvider);
         _parser = new(_command.GetCommand());
     }
@@ -54,14 +54,11 @@ public class TopicDetailsCommandTests
         var expectedDetails = new TopicDetails
         {
             Name = TopicName,
-            Status = "Active",
-            AccessedAt = DateTimeOffset.UtcNow.AddDays(-1),
-            CreatedAt = DateTimeOffset.UtcNow.AddDays(-30),
+            Status = Azure.Messaging.ServiceBus.Administration.EntityStatus.Active,
             DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             MaxMessageSizeInKilobytes = 1024,
             SizeInBytes = 2048,
             SubscriptionCount = 3,
-            EnableBatchedOperations = true,
             MaxSizeInMegabytes = 1024,
             ScheduledMessageCount = 0
         };
