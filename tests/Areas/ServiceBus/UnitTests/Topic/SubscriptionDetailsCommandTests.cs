@@ -43,7 +43,7 @@ public class SubscriptionDetailsCommandTests
         var collection = new ServiceCollection().AddSingleton(_serviceBusService);
 
         _serviceProvider = collection.BuildServiceProvider();
-        _command = new();
+        _command = new(_logger);
         _context = new(_serviceProvider);
         _parser = new(_command.GetCommand());
     }
@@ -54,15 +54,13 @@ public class SubscriptionDetailsCommandTests
         // Arrange
         var expectedDetails = new SubscriptionDetails
         {
-            Name = SubscriptionName,
+            SubscriptionName = SubscriptionName,
             TopicName = TopicName,
-            Status = Azure.Messaging.ServiceBus.Administration.EntityStatus.Active,
-            DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             LockDuration = TimeSpan.FromMinutes(1),
             MaxDeliveryCount = 10,
+            EnableBatchedOperations = true,
             ActiveMessageCount = 5,
             DeadLetterMessageCount = 0,
-            TransferMessageCount = 0,
             TransferDeadLetterMessageCount = 0
         };
 
@@ -90,11 +88,9 @@ public class SubscriptionDetailsCommandTests
 
         var json = JsonSerializer.Serialize(response.Results);
         var result = JsonSerializer.Deserialize<SubscriptionDetailsResult>(json);
-
         Assert.NotNull(result);
-        Assert.Equal(SubscriptionName, result.SubscriptionDetails.Name);
+        Assert.Equal(SubscriptionName, result.SubscriptionDetails.SubscriptionName);
         Assert.Equal(TopicName, result.SubscriptionDetails.TopicName);
-        Assert.Equal(expectedDetails.Status, result.SubscriptionDetails.Status);
         Assert.Equal(expectedDetails.ActiveMessageCount, result.SubscriptionDetails.ActiveMessageCount);
     }
 

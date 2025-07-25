@@ -15,7 +15,6 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
-using static AzureMcp.Areas.ServiceBus.Commands.Queue.QueueDetailsCommand;
 
 namespace AzureMcp.Tests.Areas.ServiceBus.UnitTests.Queue;
 
@@ -55,8 +54,6 @@ public class QueueDetailsCommandTests
         {
             Name = QueueName,
             Status = "Active",
-            AccessedAt = DateTimeOffset.UtcNow.AddDays(-1),
-            CreatedAt = DateTimeOffset.UtcNow.AddDays(-30),
             LockDuration = TimeSpan.FromMinutes(1),
             MaxDeliveryCount = 10,
             MaxMessageSizeInKilobytes = 1024,

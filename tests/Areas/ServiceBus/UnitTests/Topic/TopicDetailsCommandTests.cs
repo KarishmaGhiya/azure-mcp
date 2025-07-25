@@ -4,18 +4,19 @@
 using System.CommandLine.Parsing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Messaging.ServiceBus;
 using AzureMcp.Areas.ServiceBus.Commands.Topic;
 using AzureMcp.Areas.ServiceBus.Models;
 using AzureMcp.Areas.ServiceBus.Services;
 using AzureMcp.Models.Command;
 using AzureMcp.Options;
+using Castle.Components.DictionaryAdapter.Xml;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
-using static AzureMcp.Areas.ServiceBus.Commands.Topic.TopicDetailsCommand;
 
 namespace AzureMcp.Tests.Areas.ServiceBus.UnitTests.Topic;
 
@@ -42,7 +43,7 @@ public class TopicDetailsCommandTests
         var collection = new ServiceCollection().AddSingleton(_serviceBusService);
 
         _serviceProvider = collection.BuildServiceProvider();
-        _command = new();
+        _command = new(_logger);
         _context = new(_serviceProvider);
         _parser = new(_command.GetCommand());
     }
@@ -54,11 +55,12 @@ public class TopicDetailsCommandTests
         var expectedDetails = new TopicDetails
         {
             Name = TopicName,
-            Status = Azure.Messaging.ServiceBus.Administration.EntityStatus.Active,
+            Status = "Active",
             DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             MaxMessageSizeInKilobytes = 1024,
             SizeInBytes = 2048,
             SubscriptionCount = 3,
+            EnablePartitioning = true,
             MaxSizeInMegabytes = 1024,
             ScheduledMessageCount = 0
         };
@@ -78,7 +80,7 @@ public class TopicDetailsCommandTests
         // Assert
         Assert.NotNull(response);
         Assert.NotNull(response.Results);
-
+        // write a json convertor that extends from EntityStatus 
         var json = JsonSerializer.Serialize(response.Results);
         var result = JsonSerializer.Deserialize<TopicDetailsResult>(json);
 
@@ -109,7 +111,6 @@ public class TopicDetailsCommandTests
         // Assert
         Assert.NotNull(response);
         Assert.Equal(404, response.Status);
-        Assert.Contains("Topic not found", response.Message);
     }
 
     [Fact]

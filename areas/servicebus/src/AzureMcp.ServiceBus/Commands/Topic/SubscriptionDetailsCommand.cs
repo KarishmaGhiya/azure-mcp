@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+using System.Text.Json.Serialization;
 using Azure.Messaging.ServiceBus;
 using AzureMcp.Core.Commands;
 using AzureMcp.Core.Commands.Subscription;
