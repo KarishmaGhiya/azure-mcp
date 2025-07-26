@@ -5,9 +5,9 @@ using System.CommandLine.Parsing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Messaging.ServiceBus;
-using AzureMcp.Areas.ServiceBus.Commands.Queue;
-using AzureMcp.Areas.ServiceBus.Models;
-using AzureMcp.Areas.ServiceBus.Services;
+using AzureMcp.ServiceBus.Commands.Queue;
+using AzureMcp.ServiceBus.Models;
+using AzureMcp.ServiceBus.Services;
 using AzureMcp.Models.Command;
 using AzureMcp.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +16,8 @@ using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
 
-namespace AzureMcp.Tests.Areas.ServiceBus.UnitTests.Queue;
+namespace AzureMcp.ServiceBus.UnitTests.Areas.Queue;
 
-[Trait("Area", "ServiceBus")]
 public class QueueDetailsCommandTests
 {
     private readonly IServiceProvider _serviceProvider;

@@ -5,9 +5,9 @@ using System.CommandLine.Parsing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Messaging.ServiceBus;
-using AzureMcp.Areas.ServiceBus.Commands.Topic;
-using AzureMcp.Areas.ServiceBus.Models;
-using AzureMcp.Areas.ServiceBus.Services;
+using AzureMcp.ServiceBus.Commands.Topic;
+using AzureMcp.ServiceBus.Models;
+using AzureMcp.ServiceBus.Services;
 using AzureMcp.Models.Command;
 using AzureMcp.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,9 +15,8 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
-using static AzureMcp.Areas.ServiceBus.Commands.Topic.SubscriptionDetailsCommand;
 
-namespace AzureMcp.Tests.Areas.ServiceBus.UnitTests.Topic;
+namespace AzureMcp.ServiceBus.UnitTests.Areas.Topic;
 
 [Trait("Area", "ServiceBus")]
 public class SubscriptionDetailsCommandTests

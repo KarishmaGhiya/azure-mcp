@@ -6,9 +6,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure;
 using Azure.Messaging.ServiceBus;
-using AzureMcp.Areas.ServiceBus.Commands.Topic;
-using AzureMcp.Areas.ServiceBus.Models;
-using AzureMcp.Areas.ServiceBus.Services;
+using AzureMcp.ServiceBus.Commands.Topic;
+using AzureMcp.ServiceBus.Models;
+using AzureMcp.ServiceBus.Services;
 using AzureMcp.Models.Command;
 using AzureMcp.Options;
 using Castle.Components.DictionaryAdapter.Xml;
@@ -18,9 +18,8 @@ using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
 
-namespace AzureMcp.Tests.Areas.ServiceBus.UnitTests.Topic;
+namespace AzureMcp.ServiceBus.UnitTests.Areas.Topic;
 
-[Trait("Area", "ServiceBus")]
 public class TopicDetailsCommandTests
 {
     private readonly IServiceProvider _serviceProvider;
