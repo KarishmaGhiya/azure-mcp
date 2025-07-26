@@ -14,4 +14,10 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="coverlet.collector" />
   </ItemGroup>
+    <ItemGroup>
+    <None Remove="nsubstitute.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="nsubstitute.json" />
+  </ItemGroup>
 </Project>
